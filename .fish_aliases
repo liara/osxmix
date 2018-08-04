@@ -1,0 +1,56 @@
+alias tree 'tree -Ch'
+alias less 'less -FRNX'
+alias matrix 'cmatrix -f -a'
+
+alias .. 'cd ..'            # Go up one directory
+alias ... 'cd ../..'        # Go up two directories
+alias .... 'cd ../../..'    # And for good measure
+alias l 'ls -lah'           # Long view, show hidden
+alias la 'gls -AF'          # Compact view, show hidden
+alias ll 'gls -lFh'         # Long view, no hidden
+alias lsd 'gls -x -L -h --color=auto --group-directories-first'
+alias todo 'nvim ~/todo'    # todo list
+alias osx 'nvim ~/osx'      # osx, fish, help
+
+alias :q "exit"
+alias vim 'nvim'
+alias o 'open'
+alias psg 'ps aux | grep'
+alias pg 'pgrep -l'
+alias dir    'gdir --color=auto'
+alias vdir   'gvdir --color=auto'
+
+# colors other
+alias grep     'grep --color=auto'
+alias gfrep    'fgrep --color=auto'
+alias egrep    'egrep --color=auto'
+
+alias ptpb 'curl -F c=@- https://ptpb.pw'
+alias ptpbd 'curl -F sunset=3000 -F c=@- https://ptpb.pw'
+# shornten url: usage: sptpb  <<< https://www.longurl.com/lalallalalalala
+alias sptpb "curl -F c=@- https://ptpb.pw/u"
+alias 0x 'curl -F file=@- https://0x0.st'
+alias rick "curl -s -L 'http://bit.ly/10hA8iC' | bash"
+alias pong 'ping -c 5 8.8.8.8'
+alias openports 'lsof -i -nP'
+alias diskspace 'gdu -h --max-depth=1'
+alias ytdl "youtube-dl -o '%(title)s.%(ext)s' --restrict-filenames -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
+alias iotop 'sudo iotop -Po -C 5 12'
+alias info "command info --vi-keys"
+alias sucs 'sort | uniq -c | sort -n'
+alias gl "git log -n 15 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias nope "git commit -m 'ಠ_ಠ'"
+alias please 'sudo'
+alias siteget "wget --recursive --page-requisites --convert-links --html-extension --no-parent --wait=10 --limit-rate=20K -U Mozilla -l"
+alias timeunix 'date +%s'
+alias wis 'grep -rnw $PWD -e' # search files for a string
+alias meteo 'finger oslo@graph.no'
+alias wr 'curl -s "wttr.in/Oslo?2n" | ghead -n -3 | grep -v ┼'
+alias wrl 'curl -s "wttr.in/Oslo"'
+alias moon 'curl -s "wttr.in/Moon" | ghead -n -3 | grep -v ┼'
+alias author 'gtr -dc a-f0-9 < /dev/urandom | head -c8 | xargs'
+alias screenfetch 'screenfetch -E'
+alias add_to_path 'set -U fish_user_paths $fish_user_paths'
+alias locate 'glocate'
+alias hshow 'defaults write com.apple.Finder AppleShowAllFiles YES'
+alias hhide 'defaults write com.apple.Finder AppleShowAllFiles NO'

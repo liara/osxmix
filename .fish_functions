@@ -1,0 +1,124 @@
+# A lot of functions taken from
+# https://github.com/dideler/dotfiles/tree/master/.config/fish/functions
+
+function agc
+    ag --color --group $argv | less
+end
+
+function base64enc
+    cat $argv[1] | base64
+end
+
+function base64dec
+    cat $argv[1] | base64 -d
+end
+
+function bash-example --description "You don't have to convert your work"
+  bash -c 'echo $0 $1 $2 && date' $argv
+end
+
+# Example usage:
+#   echo "for i in seq(10000); expensive_operation; end" >> test.fish
+#   bench test.fish
+function bench --description 'Measure a benchmark script' --argument script_path
+    /usr/bin/time -p fish "$script_path"
+end
+
+# `shellswitch [bash|zsh|fish]`
+function shellswitch
+	chsh -s (brew --prefix)/bin/$argv
+end
+
+function compressimg -d "Compress a variety of image types"
+  pngquant --skip-if-larger --speed=1 --ext .png --force **.png
+   find . -name '*.jpg' -type f -print | xargs -I@ jpegtran -copy none -optimize -outfile @ @
+end
+
+# Usage: copy <file>
+function copy --description "Copy the contents of a text file or variable to your clipboard"
+  set --local argc (count $argv)
+  if test $argc -eq 1
+    switch (uname)
+      case 'Linux'
+        if test -e $argv[1]
+          xclip -selection clip < $argv[1]
+        else
+          printf $argv[1] | xclip -selection clip
+        end
+      case 'Darwin'
+        if test -e $argv[1]
+          pbcopy < $argv[1]
+        else
+          printf $argv[1] | pbcopy
+        end
+    end
+  else
+    echo "Well this is embarrassing... I can only copy one file at a time."
+  end
+end
+
+# Count dirs in dir
+function cnt
+    tree -i -L 1
+end
+
+# Get a character’s Unicode code point
+function codepoint
+    perl -e "use utf8; print sprintf('U+%04X', ord(\"$argv\"))"
+    # print a newline unless we’re piping the output to another program
+    #if [ -t 1 ]; then
+    #    echo ""; # newline
+    #fi
+end
+
+# Look words up in an online dictionary
+function defi
+ curl dict://dict.org/d:$argv
+end
+
+function digga
+    dig +nocmd $argv[1] any +multiline +noall +answer
+end
+
+function find-and-delete --description "Recursively finds and deletes any files/dirs with the matching name. E.g. find-and-delete '*.pyc'"
+  find . -name $argv[1] -delete
+end
+
+function fuck -d 'Correct your previous console command'
+    set -l exit_code $status
+    set -l eval_script (mktemp 2>/dev/null ; or mktemp -t 'thefuck')
+    set -l fucked_up_commandd $history[1]
+    thefuck $fucked_up_commandd > $eval_script
+    . $eval_script
+    rm $eval_script
+    if test $exit_code -ne 0
+        history --delete $fucked_up_commandd
+    end
+end
+
+function ips -d 'Determine local ip address'
+    ifconfig | grep "inet " | awk '{ print $2 }'
+end
+
+function mkd --description 'make and cd to a directory'
+  mkdir -p $argv
+  cd $argv
+end
+
+function myip
+    dig myip.opendns.com @resolver1.opendns.com +short
+end
+
+function size --description "Human readable size of the given file/dir"
+  gls -ghS $argv[1] | awk '{ printf("%-20s %5s\n", $8, $4) }'
+  
+  # du -chd 1 $argv[1] | grep total | cut -f 1
+  #
+  # BSD tools don't have long options --total --human-readable --max-depth=1
+  #
+  # du doesn't give the size of the file, it gives an indication of how much
+  # space the file uses, which is subtly different (usually the size reported by
+  # du is the size of the file rounded up to the nearest number of blocks, where
+  # a block is typically 512B or 1kB or 4kB)
+end
+

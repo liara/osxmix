@@ -1,0 +1,3 @@
+  #echo -e -n -s $prompt_color ' ⟩ ' $normal
+  echo -e -n -s $prompt_color $yellow ' ⋊> ' $normal
+end
